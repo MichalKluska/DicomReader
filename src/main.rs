@@ -1,5 +1,5 @@
-extern crate rayon;
-extern crate time;
+//extern crate rayon;
+//extern crate time;
 
 mod dicom_value;
 mod file_reader;
@@ -9,39 +9,34 @@ mod without_type_processor;
 
 use std;
 use std::path::Path;
-use rayon::prelude::*;
-use time::PreciseTime;
+// use rayon::prelude::*;
+// use time::PreciseTime;
 
 fn main()
 {
-    let start = PreciseTime::now();
-
-    let file_entries = file_reader::visit_dirs(Path::new("C://Users//MichałKluska//Desktop//Dane//ambrozy//ambrozy//ct_okrojone//ct"));
+    let file_entries = file_reader::visit_dirs(Path::new("D://userdata//kluska//My Documents//dicom_reader//DicomReader"));
 
     let dicom_files_infos : Vec<Vec<(&str, dicom_value::DicomValue)>> = 
-        file_entries.par_iter()
+        file_entries.iter()
         .filter_map(|file_entry| process_dicom_file(file_entry))
         .collect();
 
     println!("{}", dicom_files_infos.len());
 
-    let end = PreciseTime::now();
-    println!("{} seconds for whatever you did.", start.to(end));
+    // let dataS = "-82.5882\\-152.901\\1663";
+    // let a : Vec<&str> = dataS.split('\\').collect();
+    // let mut b : Vec<f32> = Vec::new();
 
-    let dataS = "-82.5882\\-152.901\\1663";
-    let a : Vec<&str> = dataS.split('\\').collect();
-    let mut b : Vec<f32> = Vec::new();
+    // for elem in a.iter()
+    // {
+    //     let a = elem.parse::<f32>();
 
-    for elem in a.iter()
-    {
-        let a = elem.parse::<f32>();
-
-        match a
-        {
-            Ok(a) => b.push(a),
-            _ => (),
-        }
-    }
+    //     match a
+    //     {
+    //         Ok(a) => b.push(a),
+    //         _ => (),
+    //     }
+    // }
 
     println!("{:#?}", dicom_files_infos[0]);
 

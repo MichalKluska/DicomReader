@@ -1,11 +1,15 @@
+extern crate arrayvec;
+
+use arrayvec::ArrayString;
+
 #[derive(Debug)]
 pub enum DicomValue
 {
     ApplicationEntity { data: String}, 
     AgeString {data: String},
-    AttributeTag {data: [u8; 4]},
+    AttributeTag {data: (u16, u16)},
     CodeString {data: String}, 
-    Date {data: [u8; 8]},
+    Date {data: String},
     DecimalString {data: String},
     DateTime {data: String},
     FloatingPointSingle {data: f32},
